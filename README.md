@@ -220,6 +220,7 @@ Mười slot đầy đủ: [`knowledge/tb-H`](knowledge/tb-H-module-khoi-telesal
 | [`doc/01-cai-dat.md`](doc/01-cai-dat.md) | Ba cách cài · ★ **cột bắt buộc mỗi nguồn** · bốn câu trước khi gửi · **8 câu kiểm sau khi cài** |
 | [`doc/CHANGELOG.md`](doc/CHANGELOG.md) | Bốn luật gốc · ★ **ba lỗi bắt được khi chạy thử** · những gì ⛔ chưa có |
 | [`prompts/`](prompts/) | 4 prompt mẫu: `đọc` · `ba báo cáo` · `vấn đề` · `riêng tư` |
+| ★ [**Trang hướng dẫn + 15 prompt mẫu**](https://claude.ai/artifact/ELGPDdr5GsHkm5AZtaNrUT) | Trang web một file: ba cách cài · 14 file để upload · **15 prompt bấm Copy là dùng** · 8 câu smoke test · sáu điều phải biết · mười việc đang chặn |
+| [`tools/huong-dan.html`](tools/huong-dan.html) | Chính trang trên, bản sinh tại chỗ — `python tools/trang-huong-dan.py` sinh lại từ [`tools/huong-dan.json`](tools/huong-dan.json) |
 
 ★ **Đọc `01-cai-dat.md` phần *"8 câu kiểm sau khi cài"* trước khi phát hành bản đầu tiên.** Hai câu đầu trong đó là hai câu agent **sai tự tin nhất** — cả hai đều cho ra một con số trông hợp lý và **luôn khớp tổng**.
-"# Agent-TongHopBaoCao-Telesale" 

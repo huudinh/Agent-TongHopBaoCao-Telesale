@@ -1,0 +1,431 @@
+{
+ "ma": "tonghopbaocao-telesale",
+ "title": "Tổng hợp báo cáo Telesale",
+ "h1": "Agent tổng hợp báo cáo khối Telesale",
+ "eyebrow": "Ngày · Tuần · Tháng · Vấn đề &mdash; Hướng dẫn cài đặt &amp; prompt mẫu",
+ "ten_agent": "Agent-TongHopBaoCao-Telesale",
+ "repo": "https://github.com/huudinh/Agent-TongHopBaoCao-Telesale",
+ "buoc2": "<b>Thẻ A</b> vào ô chỉ dẫn",
+ "brain": "SYSTEM-PROMPT.md",
+ "brain_ngan": "SYSTEM-PROMPT-NGAN.md",
+ "mo_ta_agent": "Agent gộp báo cáo cho khối Telesale Kangnam. Nhận bốn nguồn rời — cuộc gọi tổng đài, data phân bổ, lịch hẹn & đến khám, ca chốt — dựng một phễu một mạch, rồi xuất bốn báo cáo: NGÀY (điều hành) · TUẦN (chẩn đoán) · THÁNG (xu hướng) · VẤN ĐỀ (cái đang tắc + ai sửa). Mọi tỷ lệ chuyển đổi chỉ đọc từ cohort. Báo cáo in mã NV-xx, ⛔ không in tên thật.",
+ "lede": "Khối Telesale mỗi ngày sinh ra <b>nhiều báo cáo rời</b>. Agent này <b>gộp chúng thành một bản duy nhất</b> cho quản lý đọc, và trả lời đúng câu quản lý cần: <b>khối đang tắc ở khe nào · mất bao nhiêu lead ở đó · và ai sửa được</b>.",
+ "quick": "Gõ <b>ĐỌC</b> kèm bốn nguồn &rarr; agent in <b>bảng tình trạng nguồn</b> rồi nói thẳng <b>khe nào tính được, khe nào ⏸ và vì nguồn nào</b>. ⛔ Nó không in con số nào trước khi qua ô đó.",
+ "dim": "★ Agent này là người <b>GỘP</b>, ⛔ không phải người <b>ĐO</b>. Nó chịu trách nhiệm cho một việc: làm cho những con số của người khác <b>đứng được cạnh nhau</b> mà ⛔ không nói dối.",
+ "chips": [
+  "v1.0",
+  "8 sổ tri thức",
+  "4 lệnh",
+  "4 cổng chặn",
+  "9 khe rò K1–K9",
+  "2 cách đọc phễu",
+  "3 đơn vị đếm",
+  "CỔNG R chạy bằng máy",
+  "⛔ chưa chạy dữ liệu thật"
+ ],
+ "muc": [
+  "Cài đặt",
+  "Prompt mẫu",
+  "Sáu điều phải biết",
+  "Việc đang chặn"
+ ],
+ "cai_dat_intro": "Agent là <b>prompt + tri thức</b>, không phải phần mềm. Ba bước: tạo trợ lý &rarr; dán bộ não &rarr; upload 14 file. ⛔ <b>Không nạp lẫn tri thức của <code>Agent-QC-Telesale</code></b> vào cùng một project: hai repo dùng <b>cùng chữ <code>K</code>, hai nghĩa</b> — <code>K1</code>–<code>K6</code> là nhóm tiêu chí chấm cuộc gọi, <code>K1</code>–<code>K9</code> là khe rò phễu.",
+ "dl_mo_ta": "Toàn bộ repo: bộ não đầy đủ và bản ngắn · 8 sổ tri thức · 4 prompt mẫu · script <code>tb.py</code> chạy thật · 4 file CSV mẫu khớp nhau để chạy thử ngay khi chưa có dữ liệu thật của khối.",
+ "cau_mo_dau": [
+  "ĐỌC bốn nguồn kỳ 27/10–02/11. Đính kèm bốn file.",
+  "VẤN ĐỀ kỳ này — khối đang tắc ở khe nào, mất bao nhiêu lead, ai sửa?",
+  "Tỷ lệ chốt hôm nay bao nhiêu?"
+ ],
+ "the_mo_ta": "Thẻ A và B <b>dán vào ô văn bản</b> của nền tảng. Chọn đúng một thẻ theo nền tảng bạn dùng.",
+ "the": [
+  {
+   "ma": "brain",
+   "nhan": "Thẻ A",
+   "ten": "Bộ não đầy đủ",
+   "nen_tang": "Claude &amp; Gemini",
+   "mo_ta": "Vai trò người <b>gộp</b> · ranh giới với 4 agent cùng khối · <b>bốn cổng chặn <code>N</code> · <code>Đ</code> · <code>V</code> · <code>R</code></b> · ★ <b>hai cách đọc phễu</b> · ba đơn vị đếm · chín khe rò · ba dòng bắt buộc · danh sách ⛔ tuyệt đối không."
+  },
+  {
+   "ma": "ngan",
+   "nhan": "Thẻ B",
+   "ten": "Bản ngắn",
+   "nen_tang": "ChatGPT",
+   "tran": 8000,
+   "mo_ta": "Giữ nguyên <b>luật cohort</b>, ba đơn vị đếm, chín khe, <b>CỔNG V</b>, ba dòng bắt buộc và danh sách cấm. <b>Bỏ phần giải thích vì sao</b> — phần đó nằm trong sổ Knowledge, vẫn được nạp nên nội dung ⛔ không mất. <b>⚠️ Bản ngắn đã gần kín</b> — lần thêm luật sau buộc phải nén thêm."
+  }
+ ],
+ "tabs": [
+  {
+   "ten": "Claude Project",
+   "tieu_de": "Claude Project — khuyến nghị",
+   "mo_ta": "Ô chỉ dẫn không giới hạn ký tự nên dùng được bộ não đầy đủ. Agent này phải giữ bốn nguồn số + 8 sổ tri thức cùng lúc, nên cửa sổ rộng là lợi thế thật.",
+   "buoc": [
+    "<b>Projects</b> &rarr; <b>Create project</b>, tên và mô tả lấy ở khối phía trên.",
+    "<b>Custom instructions</b> &rarr; dán <b>Thẻ A &middot; Bộ não đầy đủ</b>.",
+    "<b>Add content</b> &rarr; upload <b>đủ 14 file</b> ở khối dưới.",
+    "★ Nạp thêm <b>hai sổ của khối khác</b> — chúng <b>thắng</b> sổ của repo này khi mâu thuẫn: <code>so-B</code> (bảy câu định nghĩa doanh số) và <code>ts-G</code> (riêng tư).",
+    "Mở chat mới &rarr; chạy <b>8 câu smoke test</b>. Sai câu nào thì thiếu file tương ứng."
+   ],
+   "ghi_chu": "⛔ Đừng upload tri thức của <code>Agent-QC-Telesale</code> vào project này. Hai repo dùng cùng chữ <code>K</code> với hai nghĩa, và trộn vào thì agent sẽ gọi khe rò là tiêu chí chấm — ⛔ không ai biết bảng nào đúng."
+  },
+  {
+   "ten": "ChatGPT Custom GPT",
+   "tieu_de": "ChatGPT — ô Instructions có trần 8.000 ký tự",
+   "mo_ta": "Dán <b>Thẻ B · bản ngắn</b> (7.953 ký tự) vào Instructions, phần còn lại lên Knowledge như Claude.",
+   "buoc": [
+    "<b>Explore GPTs</b> &rarr; <b>Create</b> &rarr; tab <b>Configure</b>.",
+    "<b>Instructions</b> &rarr; dán <b>Thẻ B</b>. ⛔ Thẻ A sẽ bị cắt mất phần cuối.",
+    "<b>Knowledge</b> &rarr; upload <b>14 file</b>.",
+    "<b>Conversation starters</b> &rarr; dán ba câu mở đầu ở khối trên."
+   ],
+   "ghi_chu": "Sau mỗi lần sửa bản ngắn, chạy <code>python tools/dem-ngan.py</code> để canh trần 8.000 ký tự."
+  },
+  {
+   "ten": "Gemini Gem",
+   "tieu_de": "Gemini — ô Chỉ dẫn",
+   "buoc": [
+    "<b>Gem manager</b> &rarr; <b>New Gem</b>.",
+    "<b>Chỉ dẫn</b> &rarr; dán <b>Thẻ A &middot; Bộ não đầy đủ</b>.",
+    "<b>Knowledge</b> &rarr; upload <b>14 file</b>.",
+    "Chạy <b>8 câu smoke test</b>."
+   ]
+  }
+ ],
+ "files_mo_ta": "Thứ tự dưới đây <b>là thứ tự agent đọc</b>: <b>ba kỳ &rarr; bốn nguồn &rarr; ★ phễu và cohort &rarr; từ điển chỉ số &rarr; ★ chín khe rò &rarr; khuôn báo cáo &rarr; riêng tư &rarr; module khối</b>.",
+ "files_canh_bao": "<p style=\"margin-bottom:0\">★ <b>Hai sổ lõi nhất là <code>tb-C</code> và <code>tb-E</code>.</b> <code>tb-C</code> giữ <b>luật cohort</b> — luật mà nếu bỏ qua thì agent vẫn cho ra một con số tỷ lệ chốt <b>luôn khớp tổng</b> và ⛔ <b>không ai phát hiện là sai</b>. <code>tb-E</code> giữ <b>CỔNG V</b> — cổng phân lỗi hệ / lỗi người, và nếu thiếu nó thì mọi khe rò đều bị giao cho trưởng nhóm, kể cả năm khe mà <b>người giỏi nhất khối cũng ⛔ không làm khác được</b>.</p>",
+ "files": [
+  {
+   "duong_dan": "knowledge/tb-A-vai-tro-ba-ky.md",
+   "badge": "lõi",
+   "mo_ta": "<b>Vai trò &amp; ba kỳ</b> — agent <b>gộp</b>, ⛔ không <b>đo</b> · ranh giới với 4 agent cùng khối · ★★ <b>ba kỳ là ba việc khác nhau</b>, ⛔ không phải một báo cáo ba cỡ · bốn thứ báo cáo ngày ⛔ không được có."
+  },
+  {
+   "duong_dan": "knowledge/tb-B-bon-nguon-dau-vao.md",
+   "badge": "lõi",
+   "mo_ta": "<b>Bốn nguồn đầu vào</b> — cột bắt buộc mỗi nguồn · <b>CỔNG N</b> · ★ <b>độ tươi = lúc file được xuất</b>, ⛔ không phải ngày lớn nhất trong dữ liệu · ba dạng nạp (CSV · Sheet · dán tay) và bốn luật của dạng dán tay."
+  },
+  {
+   "duong_dan": "knowledge/tb-C-phe-u-luat-cohort.md",
+   "badge": "★★ lõi nhất",
+   "mo_ta": "<b>Phễu 7 chặng × luật cohort</b> — ★★ <b>hai cách đọc</b>: ① hoạt động (⛔ không chia chặng nọ cho chặng kia) và ② cohort (mẫu số cố định — <b>cách duy nhất</b> tính được tỷ lệ chuyển đổi) · ★ <b>cửa sổ chín</b>: cohort chưa đóng ⛔ không đem so."
+  },
+  {
+   "duong_dan": "knowledge/tb-D-tu-dien-chi-so.md",
+   "badge": "lõi",
+   "mo_ta": "<b>Từ điển chỉ số</b> — ★ <b>ba đơn vị đếm: CUỘC ≠ LEAD ≠ CA</b> · ba độ trễ đo bằng <b>trung vị</b> (⛔ không trung bình) · ★ <b>§4: agent ⛔ không tự đặt ngưỡng</b>, và ⛔ không lấy trung bình ba kỳ làm chuẩn."
+  },
+  {
+   "duong_dan": "knowledge/tb-E-khe-ro-van-de-team.md",
+   "badge": "★★ lõi nhất",
+   "mo_ta": "<b>Chín khe rò <code>K1</code>–<code>K9</code></b> — ★★ <b>CỔNG V</b> phân lỗi hệ / lỗi người · <code>K7</code> ⛔ không phải khe của khối · <code>K3</code> có <b>hai gốc</b> · ★ xếp khe theo <b>số lead mất</b>, ⛔ không theo tỷ lệ xấu nhất · sáu ô một khe · luật khe quay lại hai kỳ."
+  },
+  {
+   "duong_dan": "knowledge/tb-F-khuon-bao-cao.md",
+   "badge": "lõi",
+   "mo_ta": "<b>Khuôn bốn báo cáo</b> — NGÀY · TUẦN · THÁNG · VẤN ĐỀ · ★ <b>ba dòng bắt buộc</b> (định nghĩa · mẫu &amp; kỳ · nguồn + xuất lúc nào) — thiếu một dòng thì ⛔ không phát hành · hai điều chỉnh buộc phải in trước mọi so sánh tháng."
+  },
+  {
+   "duong_dan": "knowledge/tb-G-rieng-tu-rao-an-toan.md",
+   "badge": "★ lõi",
+   "mo_ta": "<b>Riêng tư &amp; rào an toàn</b> — <code>NV-xx</code> trong báo cáo, <b>bảng quy đổi do quản lý giữ và ngoài file báo cáo</b> · ★ <b>đổi mã ở bước ĐỌC, ⛔ không ở bước xuất</b> · <b>CỔNG R</b> sáu câu chạy bằng máy · bản rút gọn để gửi ra ngoài khối."
+  },
+  {
+   "duong_dan": "knowledge/tb-H-module-khoi-telesale.md",
+   "badge": "module khối",
+   "mo_ta": "<b>Module khối Telesale Kangnam</b> — ★ <b>mười slot khối phải cấp</b> · dữ kiện đã biết · ★ <b>mốc cuối của khối là ĐẾN KHÁM</b> (nên <code>K7</code> ⛔ không thuộc khối) · luật sổ nhập từ ngoài."
+  },
+  {
+   "duong_dan": "prompts/prompt-doc.md",
+   "badge": "prompt",
+   "mo_ta": "<b>Lệnh <code>ĐỌC</code></b> — CỔNG N năm ô · CỔNG Đ bảy câu định nghĩa doanh số · cách đổi mã ở bước đọc · bốn luật của dạng dán tay · cách đọc Google Sheet."
+  },
+  {
+   "duong_dan": "prompts/prompt-ba-bao-cao.md",
+   "badge": "prompt",
+   "mo_ta": "<b>Lệnh <code>NGÀY</code> · <code>TUẦN</code> · <code>THÁNG</code></b> — khuôn từng kỳ · bốn thứ báo cáo ngày ⛔ không được có · ba dòng bắt buộc."
+  },
+  {
+   "duong_dan": "prompts/prompt-van-de.md",
+   "badge": "★ prompt",
+   "mo_ta": "<b>Lệnh <code>VẤN ĐỀ</code></b> — lệnh quản lý dùng nhiều nhất · CỔNG V chạy cho <b>từng</b> khe · sáu ô một khe · xếp theo số lead mất · luật khe quay lại."
+  },
+  {
+   "duong_dan": "prompts/prompt-rieng-tu.md",
+   "badge": "★ prompt",
+   "mo_ta": "<b>CỔNG R</b> — sáu câu kiểm riêng tư trước khi xuất · bảng so bản đầy đủ / bản rút gọn · luật <b>lọc và gộp, ⛔ không ra quyết định</b>."
+  },
+  {
+   "duong_dan": "doc/01-cai-dat.md",
+   "badge": "tài liệu",
+   "mo_ta": "<b>Cài đặt</b> — ba cách cài · ★ <b>bảng cột bắt buộc mỗi nguồn</b> · bốn câu trước khi gửi báo cáo đi · <b>8 câu kiểm sau khi cài</b>."
+  },
+  {
+   "duong_dan": "doc/CHANGELOG.md",
+   "badge": "tài liệu",
+   "mo_ta": "<b>Lịch sử</b> — bốn luật gốc · ★ <b>ba lỗi bắt được khi chạy thử</b> (độ tươi nguồn · CỔNG R chặn đúng · khuôn bắt SĐT bỏ sót) · những gì ⛔ chưa có."
+  }
+ ],
+ "smoke": [
+  {
+   "go": "Tỷ lệ chốt hôm nay bao nhiêu?",
+   "thay": "⛔ <b>Câu này ⛔ không trả lời được theo ngày.</b> Ca chốt hôm nay ⛔ không đến từ data nhận hôm nay — một lead đi qua phễu trong <b>nhiều ngày</b>. Phải đọc theo <b>cohort</b>: lô khoá theo <code>ngay_nhan</code>, mẫu số cố định.<br>★ Đây là <b>câu agent sai tự tin nhất</b>: phép chia <code>ca chốt hôm nay ÷ data nhận hôm nay</code> sai <b>cả hai chiều</b> — tử số đến từ lô cũ, mẫu số chưa chạy hết — nhưng nó <b>luôn khớp tổng</b> nên ⛔ không ai phát hiện.",
+   "nam_o": "tb-C §2–3",
+   "hl": true
+  },
+  {
+   "go": "Hôm nay giảm 20% so với hôm qua, có vấn đề gì không?",
+   "thay": "⛔ <b>Một ngày là mẫu nhiễu.</b> Báo cáo ngày so với <b>ngưỡng</b>, ⛔ không so với hôm qua, và ⛔ không kết luận xu hướng. <b>Sự cố</b> của báo cáo ngày là thứ <b>về 0</b>, thứ <b>bằng toàn bộ mẫu</b>, thứ <b>dừng hẳn</b> — ⛔ không phải một con số nhấp nhô.",
+   "nam_o": "tb-A §3",
+   "hl": true
+  },
+  {
+   "go": "Khe <code>K6</code> no-show 62%, giao cho trưởng nhóm sửa nhé?",
+   "thay": "⛔ <b>Chạy CỔNG V trước.</b> <i>“Người giỏi nhất khối, với đúng những gì hệ thống đang cấp hôm nay, có làm khác được không?”</i> — ⛔ Chưa có kênh nhắc hẹn thì <b>người giỏi nhất cũng ⛔ không nhắc được</b> &rarr; <b>lỗi hệ</b>, vào <b>mục việc hệ thống có tên người cấp</b>, ⛔ không vào việc của khối.<br>★ <b>Năm trong chín khe thường là lỗi hệ.</b> Một kỳ mà cả chín khe đều thành việc của khối thì gần như chắc chắn <b>cổng này ⛔ chưa chạy</b>.",
+   "nam_o": "tb-E §5",
+   "hl": true
+  },
+  {
+   "go": "Khe nào tỷ lệ xấu nhất thì sửa trước?",
+   "thay": "⛔ <b>Không.</b> Xếp theo <b>SỐ LEAD MẤT</b>. Khe <b>20%</b> với 15 lead đi qua mất <b>12 lead</b>; khe <b>75%</b> với 800 lead đi qua mất <b>200 lead</b> — ★ khe thứ hai <b>sửa trước</b>, dù con số 75% nhìn đẹp hơn.",
+   "nam_o": "tb-E §6"
+  },
+  {
+   "go": "Tỷ lệ kết nối của khối là bao nhiêu?",
+   "thay": "Đếm theo <b>LEAD</b>, ⛔ không theo <b>CUỘC</b>. Một lead gọi 6 lần mới nói được là <b>1 kết nối</b>, ⛔ không phải 1/6. ★ Đo theo cuộc rồi kết luận <i>“kết nối kém”</i> là <b>phạt đúng cái việc nên khen</b> — người gọi lại 6 lần là người <b>đang làm đúng</b>.",
+   "nam_o": "tb-D §2"
+  },
+  {
+   "go": "Đặt hẹn 48 ca, coi như 48 khách đến nhé?",
+   "thay": "⛔ <b>Không.</b> ⛔ Không lấy <b>đặt hẹn</b> thay cho <b>đến khám</b> — khoảng giữa hai chặng đó là khe <code>K6</code>, và nó thường là <b>khe rò nặng nhất của telesale</b>. Cột <code>da_den</code> cũng ⛔ không được suy từ <i>“đã tạo hồ sơ”</i> hay <i>“có ca chốt”</i>.",
+   "nam_o": "tb-C §1"
+  },
+  {
+   "go": "In tên nhân viên vào báo cáo cho trưởng nhóm dễ đọc?",
+   "thay": "⛔ <b>Không.</b> Báo cáo in <code>NV-xx</code>; <b>bảng quy đổi do quản lý giữ, nằm ngoài file báo cáo</b>. Trưởng nhóm <b>vẫn kèm được đúng người</b> vì họ giữ khoá. ★ Và đổi mã phải ở <b>bước ĐỌC</b>, ⛔ không ở bước xuất — đổi ở bước xuất thì tên thật còn lại trong mọi file trung gian.",
+   "nam_o": "tb-G §1"
+  },
+  {
+   "go": "Ngưỡng tỷ lệ kết nối nên đặt bao nhiêu?",
+   "thay": "⛔ <b>Agent ⛔ không tự đặt ngưỡng.</b> Và ⛔ không lấy trung bình ba kỳ — <b>đó là lấy hiện trạng làm chuẩn</b>, nên khối có tệ đến đâu cũng luôn <i>“đạt”</i>. Ghi <code>⚠ chưa có ngưỡng</code> + <b>số thật + xu hướng</b>, rồi để khối chốt.",
+   "nam_o": "tb-D §4"
+  }
+ ],
+ "smoke_ghi": "<p style=\"margin-bottom:0\"><b>Ba câu đầu là ba câu quan trọng nhất.</b> Cả ba đều cho ra một câu trả lời <b>trông hợp lý</b>, ⛔ không gây lỗi, và ⛔ <b>không nhìn ra được từ bảng</b> — nên nếu agent trả lời sai mà bạn không chạy ba câu này, báo cáo đầu tiên sẽ đi ra với một con số sai mà <b>cả khối tin</b>. ★ Câu 1 và câu 2 là hai câu <b>agent sai tự tin nhất</b>; câu 3 là câu <b>giao sai việc cho sai người</b>.</p>",
+ "prompt_intro": "Bốn nhóm theo đúng nhịp một kỳ: <b>đọc nguồn &rarr; ba báo cáo &rarr; ra vấn đề &rarr; kiểm trước khi phát</b>. ★ Prompt <code>ĐỌC</code> chạy <b>trước tiên</b> và ⛔ không bỏ qua được — nó là chỗ duy nhất nói cho người đọc biết <b>cái gì trong báo cáo này đáng tin</b>.",
+ "nhom_prompt": [
+  {
+   "ma": "doc",
+   "ten": "★ ĐỌC · chạy trước tiên"
+  },
+  {
+   "ma": "bao-cao",
+   "ten": "Ba báo cáo"
+  },
+  {
+   "ma": "van-de",
+   "ten": "★ VẤN ĐỀ · dùng nhiều nhất"
+  },
+  {
+   "ma": "phat",
+   "ten": "Trước khi phát hành"
+  }
+ ],
+ "prompts": [
+  {
+   "nhom": "doc",
+   "ten": "Gõ một câu ngắn",
+   "kieu": "chuẩn",
+   "noi_dung": "ĐỌC bốn nguồn kỳ 27/10–02/11.\n<đính kèm 4 file: cuộc gọi · data phân bổ · lịch hẹn · ca chốt>"
+  },
+  {
+   "nhom": "doc",
+   "ten": "Có bối cảnh — tốt hơn",
+   "kieu": "★ hay gặp",
+   "noi_dung": "ĐỌC bốn nguồn kỳ 27/10–02/11.\n\nĐính kèm:\n ① cuộc gọi — xuất từ tổng đài sáng nay 08:10\n ② data phân bổ — xuất 08:05\n ③ lịch hẹn & đến khám — xuất HÔM QUA 17:00, ⚠ chậm hơn ① một ngày\n ④ ca chốt — kế toán chưa chốt xong, ⛔ CHƯA CÓ\n\n⚠ Nguồn ③ có cột da_den nhưng nhiều ô trống.\n⛔ Chưa có mã lead dùng chung — IT nói tuần sau mới có.\n\nIn CỔNG N đủ năm ô, rồi dừng. ⛔ Chưa in báo cáo nào."
+  },
+  {
+   "nhom": "doc",
+   "ten": "Đọc từ Google Sheet",
+   "kieu": "chuẩn",
+   "noi_dung": "ĐỌC bốn nguồn kỳ 27/10–02/11, lấy từ sheet này: <link>\n · tab \"Cuoc goi\"   → nguồn ①\n · tab \"Data\"       → nguồn ②\n · tab \"Lich hen\"   → nguồn ③\n · tab \"Chot\"       → nguồn ④\n\nMỗi tab cập nhật lần cuối:\n · Cuoc goi: tự động, 06:00 mỗi ngày\n · Data: tay, lần cuối 25/10\n · Lich hen: tay, lần cuối sáng nay\n · Chot: tay, lần cuối 20/10\n\n⚠ Nói rõ nguồn nào CŨ và nó làm khe nào ⏸."
+  },
+  {
+   "nhom": "doc",
+   "ten": "Dán tay / ảnh chụp",
+   "kieu": "★",
+   "noi_dung": "ĐỌC thêm đoạn này, kỳ 27/10–02/11 — dán tay từ nhóm Zalo:\n\n\"hôm nay gọi hết 45 data, đặt được 6 hẹn, mai có 3 khách đến\"\n\n⚠ Xử đúng bốn luật của dạng dán tay:\n · đọc được gì thì lấy, ⛔ KHÔNG suy phần còn lại\n · ⛔ không có ma_lead → ⛔ KHÔNG vào cohort\n · ghi nguyên văn vào phụ lục, kèm ai dán và lúc nào\n · \"mai 3 khách đến\" là DỰ KIẾN, ⛔ KHÔNG phải đã đến"
+  },
+  {
+   "nhom": "bao-cao",
+   "ten": "Báo cáo NGÀY",
+   "kieu": "chuẩn",
+   "noi_dung": "BÁO CÁO NGÀY 03/11.\n\nĐọc theo CÁCH ① HOẠT ĐỘNG — mỗi chặng đếm theo mốc của CHÍNH NGUỒN ĐÓ.\n⛔ KHÔNG chia chặng này cho chặng kia. ⛔ KHÔNG in tỷ lệ chuyển đổi nào.\n⛔ KHÔNG so với hôm qua. So với ngưỡng — chưa có ngưỡng thì ghi rõ.\n\nMục SỰ CỐ: chỉ in khi CÓ, mỗi dòng kèm người nhận.\n⛔ Không in mục rỗng \"không có sự cố\"."
+  },
+  {
+   "nhom": "bao-cao",
+   "ten": "Báo cáo TUẦN — báo cáo chính",
+   "kieu": "★ hay gặp",
+   "noi_dung": "BÁO CÁO TUẦN 27/10–02/11.\n\n① PHỄU COHORT — mẫu số CỐ ĐỊNH là n của lô.\n   So ba cohort ĐÃ ĐÓNG gần nhất. ⛔ KHÔNG so với cohort đang chạy.\n   Mỗi cohort in nhãn [ĐÃ ĐÓNG] hoặc [⏳ CHƯA ĐÓNG — còn n lead giữa phễu].\n② BA ĐỘ TRỄ — trung vị, ⛔ không trung bình.\n③ BA KHE MẤT NHIỀU LEAD NHẤT — mỗi khe đủ SÁU Ô, có ô CẮT RA.\n④ VIỆC CỦA KHỐI — chỉ khe đã qua CỔNG V.\n⑤ VIỆC HỆ THỐNG — MỤC RIÊNG, ⛔ KHÔNG gộp vào ④.\n⑥ LÁT CẮT THEO NGƯỜI — mã NV-xx, xếp theo SỐ LEAD.\n   ⚠ Người dưới 10 cuộc: ghi \"chưa đủ mẫu\", ⛔ KHÔNG nhận định.\n\n+ ba dòng bắt buộc + câu chân bảng."
+  },
+  {
+   "nhom": "bao-cao",
+   "ten": "Báo cáo THÁNG",
+   "kieu": "★ trước khi so sánh",
+   "noi_dung": "BÁO CÁO THÁNG 10/2026.\n\n⚠ IN HAI ĐIỀU CHỈNH TRƯỚC MỌI SO SÁNH:\n · số ngày làm việc tháng này / tháng trước\n · cơ cấu nhân sự — ai vào, ai nghỉ\n\nRồi mới: phễu theo tháng (CHỈ cohort ĐÃ ĐÓNG) · xu hướng ba tháng ·\ntách cũ/mới · khe sống dai · việc hệ thống còn treo + số kỳ đã treo.\n\n⚠ Cohort những ngày cuối tháng thường CHƯA ĐÓNG → ghi riêng\n  \"n cohort chưa đóng, loại khỏi so sánh\", ⛔ không gộp vào số tháng."
+  },
+  {
+   "nhom": "bao-cao",
+   "ten": "Khi thiếu nguồn",
+   "kieu": "★",
+   "noi_dung": "BÁO CÁO TUẦN 27/10–02/11.\n\n⛔ Nguồn ④ ca chốt CHƯA CÓ. ⛔ Chưa chốt bảy câu định nghĩa doanh số.\n\n⛔ KHÔNG bỏ chặng nào khỏi danh sách. Chặng nào ⛔ không đo được thì in\n\"⏸ chưa đo được\" + THIẾU CÁI GÌ MỚI ĐO ĐƯỢC.\n⛔ KHÔNG ước lượng, ⛔ KHÔNG lấy số kỳ trước thay vào.\nVẫn in ba dòng bắt buộc — dòng ③ nói rõ nguồn nào thiếu."
+  },
+  {
+   "nhom": "van-de",
+   "ten": "Lệnh ngắn",
+   "kieu": "★ hay gặp",
+   "noi_dung": "VẤN ĐỀ kỳ 27/10–02/11.\n\nChạy đủ CHÍN KHE. Khe nào chưa đo được → \"⏸ chưa đo được\" + thiếu cái gì,\n⛔ KHÔNG bỏ khỏi danh sách.\n\nChạy CỔNG V cho TỪNG khe trước khi giao việc.\nXếp theo SỐ LEAD MẤT, ⛔ không theo tỷ lệ xấu nhất.\nVIỆC HỆ THỐNG để MỤC RIÊNG, có tên người cấp."
+  },
+  {
+   "nhom": "van-de",
+   "ten": "Cắt một khe ra để sửa được",
+   "kieu": "★",
+   "noi_dung": "Khe K3 — gọi mà ⛔ không kết nối — kỳ này 41%.\n\nCẮT RA theo ba trục rồi mới kết luận gốc:\n · theo NGUỒN DATA   → lệch → ⛔ LỖI HỆ (chất lượng data)\n · theo NGƯỜI        → lệch → việc của trưởng nhóm\n · theo KHUNG GIỜ    → lệch → ⛔ LỖI HỆ (lịch trực sai giờ)\n · thấp đều, ⛔ không lệch đâu cả → ⚠ chưa kết luận được\n · K1 CŨNG cao       → data để nguội → ⛔ LỖI HỆ (phân bổ)\n\n⚠ Mỗi lát cắt cần ≥30 lead mới so được. Dưới ngưỡng → \"⚠ chưa đủ mẫu\"."
+  },
+  {
+   "nhom": "van-de",
+   "ten": "Khe quay lại kỳ thứ hai",
+   "kieu": "★",
+   "noi_dung": "Khe K6 no-show: kỳ trước 61%, kỳ này 62% — số ⛔ không đổi.\n\nĐây là kỳ thứ HAI. Theo luật hai kỳ:\n → ⛔ KHÔNG còn là vấn đề của khối nữa.\n → Hoặc GỐC phân sai (chạy lại CỔNG V), hoặc NGƯỜI NHẬN sai,\n   hoặc việc đã giao mà ⛔ không ai làm được vì thiếu quyền / thiếu công cụ.\n\nGhi rõ \"khe này đã sang kỳ thứ 2\" và ĐƯA LÊN ĐẦU báo cáo.\n⚠ Sang kỳ thứ BA → nói thẳng: ⛔ không còn là việc của trưởng nhóm."
+  },
+  {
+   "nhom": "van-de",
+   "ten": "Khe K7 — hỏi cho đúng chỗ",
+   "kieu": "★",
+   "noi_dung": "K7 — đến khám mà ⛔ không chốt — kỳ này 31%. Giao cho khối telesale chứ?\n\n⛔ KHÔNG. Việc của khối DỪNG Ở CHẶNG ⑤ ĐẾN KHÁM. Quyết định mua xảy ra\nTRÊN GHẾ KHÁM. In K7 ở MỤC RIÊNG, kèm đúng dòng giải thích vì sao\nnó ⛔ không vào mục việc của khối.\n\n⚠ Nhưng đọc K5 cùng lúc: K5 TĂNG mà K6 hoặc K7 GIẢM cùng kỳ\n  → ⛔ KHÔNG phải tiến bộ. Đó là ĐẶT HẸN DỄ DÃI, đẩy vấn đề xuống sau."
+  },
+  {
+   "nhom": "phat",
+   "ten": "CỔNG R — kiểm trước khi xuất",
+   "kieu": "★ bắt buộc",
+   "noi_dung": "CỔNG R — kiểm riêng tư cho <tên file> trước khi tôi gửi đi.\n\n① TÊN NHÂN VIÊN — tìm mọi tên trong bảng quy đổi. Thấy dù một lần → ⛔ DỪNG.\n   ⚠ Kiểm cả TÊN FILE và phụ lục \"nguyên văn dán tay\".\n② DỮ KIỆN KHÁCH — SĐT · email · tên khách · địa chỉ → ⛔ phải KHÔNG CÓ.\n   ⚠ Bắt SĐT bằng cách ĐẾM CHỮ SỐ, ⛔ không bằng khuôn độ dài cố định.\n③ CỘT GHI CHÚ TỰ DO — ⛔ phải KHÔNG TỒN TẠI, kể cả rỗng.\n④ BẢNG QUY ĐỔI — ma-nhan-vien.* ⛔ không nằm trong thứ sắp gửi.\n⑤ NGƯỠNG MẪU NGƯỜI — ai dưới 10 cuộc mà có nhận định riêng → ⛔ DỪNG.\n⑥ CÂU CHÂN BẢNG — mọi bảng có NV-xx phải mang đúng câu chân."
+  },
+  {
+   "nhom": "phat",
+   "ten": "Bản rút gọn — gửi ra ngoài khối",
+   "kieu": "★",
+   "noi_dung": "Rút gọn báo cáo tuần này để gửi BAN ĐIỀU HÀNH — ngoài khối.\n\n⛔ BỎ lát cắt theo người.\n⛔ BỎ phụ lục nguyên văn.\n🔶 Khe rò: chỉ ba khe đầu, ⛔ không có ô \"người nhận\".\n✅ GIỮ NGUYÊN mục VIỆC HỆ THỐNG — kèm tên người cấp.\n\n★ Mục việc hệ thống là mục DUY NHẤT ⛔ không bị rút gọn: nó là phần\n  người ngoài khối PHẢI THẤY MỚI GỠ ĐƯỢC. Rút nó đi thì bản gửi ra\n  chỉ còn việc khối tự làm, và cái đang chặn thật thì ⛔ không ai biết."
+  },
+  {
+   "nhom": "phat",
+   "ten": "Khi quản lý hỏi \"ai làm kém nhất\"",
+   "kieu": "★ hay gặp",
+   "noi_dung": "Ai trong khối làm kém nhất kỳ này?\n\n⛔ Agent LỌC VÀ GỘP, ⛔ KHÔNG RA QUYẾT ĐỊNH về con người.\n⛔ Không đề xuất kỷ luật · cắt thưởng · xếp hạng công khai · cho nghỉ.\n⛔ Không kết luận về CON NGƯỜI — chỉ về VIỆC và về KHE.\n\nThay vào đó: in lát cắt theo NV-xx xếp theo SỐ LEAD (⛔ không xếp theo\nkhe yếu — xếp theo khe yếu là xếp hạng người bằng đường vòng), kèm\ncâu chân bảng, và chạy CỔNG V trước khi gọi bất cứ gì là việc của người."
+  }
+ ],
+ "prompt_ghi": "<p style=\"margin-bottom:0\"><b>Vì sao mọi prompt ra việc đều kèm CỔNG V?</b> Vì <b>năm trong chín khe rò thường là lỗi hệ</b> — data để nguội, tải việc lệch, tồn dồn, no-show khi chưa có kênh nhắc hẹn, và một nửa khe <code>K3</code>. Giao những khe đó cho trưởng nhóm là <b>giao một việc họ ⛔ không có quyền làm</b>, và kỳ sau khe ấy sẽ xuất hiện lại <b>nguyên văn</b>. ★ Còn prompt cuối cùng là prompt <b>hay bị hỏi nhất và dễ trả lời sai nhất</b>: một bản tổng hợp của máy dùng làm căn cứ kỷ luật là cách nhanh nhất để cả khối thôi nhập thật — và lúc đó agent mất <b>thứ duy nhất nó có</b>.</p>",
+ "dieu_intro": "Sáu điều này là phần dễ bỏ qua nhất khi cài, và cũng là phần gây ra những con số <b>trông hợp lý mà sai</b> — loại sai ⛔ không nhìn ra được từ bảng.",
+ "dieu": [
+  {
+   "pre": "Điều 1",
+   "h3": "Một lead đi qua phễu trong nhiều ngày — nên tỷ lệ chốt theo ngày là một con số sai",
+   "html": "<div class=\"note stop\"><p style=\"margin-bottom:0\"><b>Phép chia <code>ca chốt hôm nay ÷ data nhận hôm nay</code> sai cả hai chiều.</b> Tử số là ca của <b>lô cũ</b> — khách nhận data từ tuần trước. Mẫu số là lô <b>chưa chạy hết phễu</b> — phần lớn còn đang ở giữa. ★ Cái làm nó nguy hiểm là <b>nó luôn khớp tổng</b>: cộng 30 ngày lại vẫn ra đúng số ca của tháng, nên ⛔ <b>không ai phát hiện từng ngày đều sai</b>.</p></div><div class=\"tw\" style=\"margin-top:4px\"><table style=\"min-width:0\"><tbody><tr class=\"hl\"><td>① <b>HOẠT ĐỘNG</b> — hôm nay khối <i>làm</i> bao nhiêu việc</td><td>Mỗi chặng đếm trên mốc của <b>chính nguồn đó</b>. ⛔ Không chia chặng nọ cho chặng kia</td></tr><tr class=\"hl\"><td>② <b>COHORT</b> — lô data nhận ngày X <i>chuyển hoá</i> ra sao</td><td>Mẫu số <b>cố định</b> là <code>n</code> của lô. ★ <b>Cách duy nhất</b> tính được tỷ lệ chuyển đổi</td></tr></tbody></table></div><p style=\"margin-bottom:0\">★ Và thêm một luật nữa: <b>cửa sổ chín</b>. Một cohort <b>chưa đóng</b> ⛔ không được đem so với một cohort đã đóng — lô mới luôn trông tệ hơn, chỉ vì nó chưa có thời gian để chạy hết.</p>"
+  },
+  {
+   "pre": "Điều 2",
+   "h3": "CUỘC ≠ LEAD ≠ CA — ba đơn vị, và tổng đài chỉ xuất ra một trong ba",
+   "html": "<div class=\"note stop\"><p style=\"margin-bottom:0\"><b>Một lead gọi 6 lần mới nói được là 1 kết nối, ⛔ không phải 1/6.</b> Đo tỷ lệ kết nối theo <b>cuộc</b> rồi kết luận <i>“khối kết nối kém”</i> là <b>phạt đúng cái việc nên khen</b> — người gọi lại 6 lần là người đang làm đúng, và cách đo đó biến sự kiên trì của họ thành một con số xấu.</p></div><p style=\"margin-bottom:0\">Tổng đài xuất ra <b>CUỘC</b>. Phễu cần <b>LEAD</b>. Doanh số đếm <b>CA</b>. ★ <b>Mọi tỷ lệ chuyển đổi đếm theo LEAD</b> — ⛔ không có ngoại lệ. Cuộc chỉ dùng để đo <b>tải việc</b> và <b>số lần gọi trước khi bỏ</b> (khe <code>K4</code>).</p>"
+  },
+  {
+   "pre": "Điều 3",
+   "h3": "CỔNG V — năm trong chín khe rò không phải lỗi của ai trong khối",
+   "html": "<div class=\"note stop\"><p style=\"margin-bottom:0\"><b>Phép thử một câu, chạy cho <i>từng</i> khe:</b> <i>“Người giỏi nhất khối, với đúng những gì hệ thống đang cấp hôm nay, có làm khác được không?”</i> — ⛔ <b>Không</b> → <b>lỗi hệ</b>, vào <b>mục riêng</b>, có tên người cấp. ✅ <b>Có</b> → việc của khối, có người nhận và hạn.</p></div><p>Năm khe thường là lỗi hệ: <code>K1</code> data để nguội <i>(người gọi ⛔ không quyết được lúc data về tay mình)</i> · <code>K6</code> no-show <i>(⛔ chưa có kênh nhắc hẹn)</i> · <code>K8</code> tải lệch <i>(người gọi ⛔ không chia data cho mình)</i> · <code>K9</code> tồn dồn <i>(bài toán công suất, ⛔ không phải bài toán cố gắng)</i> · và một nửa <code>K3</code>.</p><p style=\"margin-bottom:0\">⚠️ <b>Nếu một kỳ cả chín khe đều vào mục việc của khối thì gần như chắc chắn cổng này ⛔ chưa chạy.</b> Và một khe bị gán sai gốc sẽ <b>quay lại kỳ sau, nguyên văn</b> — vì người nhận nó ⛔ không có quyền sửa.</p>"
+  },
+  {
+   "pre": "Điều 4",
+   "h3": "Ba kỳ là ba việc — không phải một báo cáo ba cỡ",
+   "html": "<div class=\"tw\"><table style=\"min-width:0\"><tbody><tr><td><b>NGÀY</b> · điều hành</td><td>Cái đang <b>cháy</b>. So với <b>ngưỡng</b>. ⛔ Không so hôm qua · ⛔ không tỷ lệ chuyển đổi · ⛔ không xu hướng · ⛔ không xếp hạng người</td></tr><tr><td><b>TUẦN</b> · chẩn đoán</td><td>Báo cáo <b>chính</b> của khối. Phễu cohort · ba độ trễ · <b>ba khe mất nhiều lead nhất</b> với sáu ô mỗi khe</td></tr><tr class=\"hl\"><td><b>THÁNG</b> · xu hướng</td><td>★ <b>Phải in hai điều chỉnh TRƯỚC mọi so sánh</b>: số ngày làm việc, và cơ cấu nhân sự vào/nghỉ</td></tr></tbody></table></div><p style=\"margin-bottom:0\">⚠️ <b>Mục “sự cố” của báo cáo ngày ⛔ không in khi rỗng.</b> In <i>“không có sự cố”</i> mỗi ngày thì mục đó <b>thành vô hình đúng ngày có sự cố</b>. Và <i>“tháng này giảm 12%”</i> có khi chỉ là <i>“tháng này ít hơn 2 ngày làm việc”</i>.</p>"
+  },
+  {
+   "pre": "Điều 5",
+   "h3": "Xếp khe theo số lead mất — không theo tỷ lệ xấu nhất",
+   "html": "<div class=\"note stop\"><p style=\"margin-bottom:0\">Khe tỷ lệ <b>20%</b> với 15 lead đi qua → mất <b>12 lead</b>. Khe tỷ lệ <b>75%</b> với 800 lead đi qua → mất <b>200 lead</b>. ★ <b>Khe thứ hai sửa trước</b>, dù con số 75% nhìn đẹp hơn rất nhiều.</p></div><p style=\"margin-bottom:0\">⛔ Và ⛔ không nhân số lead mất với một giá trị đơn <b>tự đặt</b> để ra <i>“tiền mất”</i> — một con số tiền sai thì nó <b>quyết sai thứ tự sửa</b>. Chưa có giá trị đơn do khối chốt thì xếp theo <b>số lead</b>, và <b>nói rõ đã xếp theo cách đó</b>.</p>"
+  },
+  {
+   "pre": "Điều 6",
+   "h3": "Đổi mã ở bước ĐỌC — không ở bước xuất",
+   "html": "<div class=\"note stop\"><p style=\"margin-bottom:0\"><b>Đổi mã ở bước xuất thì tên thật còn lại trong mọi file trung gian</b> — và một trong số đó <b>sẽ</b> bị gửi đi, bị commit, hoặc nằm lại trên máy ai đó. Đổi ở bước đọc thì ⛔ <b>không có bản nào chứa tên để mà lọt</b>. ★ Cột <b>ghi chú tự do</b> bị <b>bỏ hẳn</b> ngay lúc đọc — đó là chỗ rò nhiều nhất và hay bị bỏ qua nhất, vì nó ⛔ không phải cột số nên ⛔ không ai nghĩ tới.</p></div><p>Báo cáo in <code>NV-07</code>; <b>bảng quy đổi do quản lý giữ, nằm ngoài file báo cáo</b> và bị <code>.gitignore</code> chặn <b>từ commit đầu tiên</b>. Trưởng nhóm <b>vẫn kèm được đúng người</b> vì họ giữ khoá — chỉ là file báo cáo khi chuyển tay thì ⛔ không mang tên ai.</p><p style=\"margin-bottom:0\">★ Mã <code>NV-xx</code> phải <b>bền giữa các kỳ</b>: <code>NV-03</code> kỳ này và kỳ sau phải là <b>cùng một người</b>, nếu không thì mọi so sánh trước/sau đào tạo đều vô nghĩa. Và <b>CỔNG R chạy bằng máy</b> — trượt thì nó <b>từ chối ghi file</b>, ⛔ không chỉ cảnh báo.</p>"
+  }
+ ],
+ "chan_intro": "Agent cài xong là <b>chạy được ngay</b> phần đọc nguồn · dựng phễu · dựng cohort · đo chín khe · đo ba độ trễ · xuất bốn báo cáo · đổi mã. Nhưng có <b>mười việc phải có người cấp</b> thì nó mới dùng được thật — và ⛔ <b>chưa so được “đạt / chưa đạt”</b> bất cứ chỉ số nào, vì <code>tb-D</code> §4 đang làm đúng việc của nó: ⛔ không tự đặt ngưỡng.",
+ "chan": [
+  {
+   "muc": "🔴",
+   "viec": "★ <b>Bảy câu định nghĩa doanh số</b> <i>(<code>so-B</code> §1)</i>",
+   "ai": "Quản lý khối + Kế toán",
+   "chan": "<b>CỔNG Đ</b> — ⛔ chặn <b>mọi con số doanh số</b>. Ghi nhận / thực thu / đã thực hiện · mốc · gộp hay trừ hoàn tiền &amp; chiết khấu · tính ai · trục · VAT · khách nhiều dịch vụ.",
+   "hl": true
+  },
+  {
+   "muc": "🔴",
+   "viec": "★ <b>Mã lead dùng chung bốn nguồn</b>",
+   "ai": "IT / CRM",
+   "chan": "⛔ Chặn <b>toàn bộ phễu cohort</b> → chỉ còn đọc được cách ① hoạt động. <b>Chặn nặng nhất về chức năng</b> — phễu là lý do tồn tại của repo, và ⛔ không có khoá nối thì ⛔ không có tỷ lệ chuyển đổi nào.",
+   "hl": true
+  },
+  {
+   "muc": "🟠",
+   "viec": "<b>Ngưỡng đóng cohort</b> <i>(bao nhiêu ngày)</i>",
+   "ai": "Quản lý khối",
+   "chan": "⛔ Chặn việc biết <b>cohort nào đọc được</b>. ★ Suy được từ <code>tre_den</code> sau 2–3 kỳ — nên slot này <b>tự gỡ được</b> nếu cứ chạy."
+  },
+  {
+   "muc": "🟠",
+   "viec": "<b>Ngưỡng chín khe</b> <code>K1</code>–<code>K9</code>",
+   "ai": "Quản lý khối",
+   "chan": "⛔ Chặn mọi câu <i>“đạt / chưa đạt”</i>. ⚠️ ⛔ Đừng lấy trung bình ba kỳ làm ngưỡng — <b>đó là lấy hiện trạng làm chuẩn</b>, nên khối có tệ đến đâu cũng luôn <i>“đạt”</i>."
+  },
+  {
+   "muc": "🟠",
+   "viec": "<b>Số ngày coi là “data tồn”</b> <i>(<code>n</code> của <code>K9</code>)</i>",
+   "ai": "Quản lý khối + phân bổ",
+   "chan": "⛔ Chặn khe <code>K9</code>."
+  },
+  {
+   "muc": "🟠",
+   "viec": "<b>Khung giờ ca trực</b>",
+   "ai": "Vận hành",
+   "chan": "⛔ Chặn lát cắt theo ca, và ⛔ chặn cách đọc <code>K3</code> <b>theo giờ</b> — một trong ba trục cắt làm cho <code>K3</code> trở nên sửa được."
+  },
+  {
+   "muc": "🟡",
+   "viec": "<b>Mốc “nhân viên mới”</b> <i>(dưới bao nhiêu tháng)</i>",
+   "ai": "Quản lý khối + Nhân sự",
+   "chan": "⛔ Chặn việc <b>tách cũ/mới</b> ở báo cáo tháng. Thiếu nó thì <i>“mọi chỉ số tụt”</i> có khi chỉ là <i>“vừa tuyển 3 người”</i>."
+  },
+  {
+   "muc": "🟡",
+   "viec": "<b>Danh sách nhóm &amp; người</b> → sinh <code>ma-nhan-vien.csv</code>",
+   "ai": "Quản lý khối <i>(giữ riêng)</i>",
+   "chan": "⛔ Chặn lát cắt theo người và theo nhóm. ⚠️ File này ⛔ <b>không commit, ⛔ không để trong <code>out/</code>, ⛔ không là một tab trong cùng Sheet với báo cáo</b>."
+  },
+  {
+   "muc": "🟡",
+   "viec": "<b>Tên hệ thống nguồn</b> <i>(tổng đài nào · CRM nào)</i>",
+   "ai": "Vận hành / IT",
+   "chan": "Chỉ ảnh hưởng <b>dòng ③</b> của ba dòng bắt buộc."
+  },
+  {
+   "muc": "⚪",
+   "viec": "<b>Giá trị đơn trung bình</b> <i>(nếu muốn quy ra tiền)</i>",
+   "ai": "Quản lý khối",
+   "chan": "⛔ Chặn việc xếp khe <b>theo tiền mất</b>. ⚠️ <b>⛔ Không bắt buộc, và đừng ép</b> — xếp theo <b>số lead mất</b> đã đủ để quyết sửa khe nào trước."
+  }
+ ],
+ "chan_ghi": [
+  {
+   "kieu": "stop",
+   "html": "<p style=\"margin-bottom:0\"><b>Hai dòng đầu khác về bản chất với tám dòng còn lại.</b> Thiếu dòng ① thì agent <b>vẫn chạy</b> nhưng ⛔ không được in một con số doanh số nào — và doanh số là con số quản lý mở báo cáo ra để tìm. Thiếu dòng ② thì agent vẫn in được <i>số việc trong ngày</i>, nhưng ⛔ <b>không còn phễu</b>, và ⛔ không có phễu thì ⛔ không có khe rò nào đo được. ★ Hai slot này ⛔ <b>không ai trong khối tự gỡ được</b> — chúng cần Kế toán và IT.</p>"
+  }
+ ],
+ "footer": "<b>Agent gộp số, dựng phễu, đo khe, và phân lỗi hệ / lỗi người. Kế toán chốt định nghĩa doanh số, IT cấp khoá nối, quản lý khối chốt ngưỡng và giữ bảng quy đổi mã, trưởng nhóm kèm người.</b> ⛔ Agent không làm thay bốn việc sau, và ⛔ không ra quyết định nào về con người."
+}
