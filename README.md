@@ -222,3 +222,4 @@ Mười slot đầy đủ: [`knowledge/tb-H`](knowledge/tb-H-module-khoi-telesal
 | [`prompts/`](prompts/) | 4 prompt mẫu: `đọc` · `ba báo cáo` · `vấn đề` · `riêng tư` |
 
 ★ **Đọc `01-cai-dat.md` phần *"8 câu kiểm sau khi cài"* trước khi phát hành bản đầu tiên.** Hai câu đầu trong đó là hai câu agent **sai tự tin nhất** — cả hai đều cho ra một con số trông hợp lý và **luôn khớp tổng**.
+"# Agent-TongHopBaoCao-Telesale" 
