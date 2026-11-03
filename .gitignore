@@ -1,0 +1,10 @@
+du-lieu/
+data/
+out/*
+!out/.gitkeep
+ma-nhan-vien.csv
+ma-nhan-vien.json
+tools/__pycache__/
+*.pyc
+*.xlsx
+!template/*.xlsx
